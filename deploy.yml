@@ -1,9 +1,15 @@
----
-- name: Deploy Maven Artifact
-  hosts: local
-  become: yes
-  tasks:
-    - name: Copy the artifact to the deployment directory
-      copy:
-        src: "/home/vibhakota/maven_app180/target/maven_app180-1.0-SNAPSHOT.jar"
-        dest: "/opt/deployment/maven_app180.jar"
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'package'
+    
+- script: |
+    ansible-playbook deploy.yml
+  displayName: 'Run Ansible deploy playbook'
