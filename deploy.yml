@@ -1,0 +1,9 @@
+---
+- name: Deploy Maven Artifact
+  hosts: local
+  become: yes
+  tasks:
+    - name: Copy the artifact to the deployment directory
+      copy:
+        src: "/home/vibhakota/maven_app180/target/maven_app180-1.0-SNAPSHOT.jar"
+        dest: "/opt/deployment/maven_app180.jar"
